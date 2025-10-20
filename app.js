@@ -1,12 +1,12 @@
-
 const { connectDB } = require('./config/db');
 const express = require('express');
+const errorHandling = require('./middlewares/errorHandling');
 const app = express();
 const port = 3000;
 
 // Middleware to parse JSON bodies
 app.use(express.json());
-
+app.use(errorHandling)
 connectDB()
 .then(() => {
   app.listen(() => {
@@ -16,4 +16,5 @@ connectDB()
 .catch((error) => {
   console.error('Failed to start server:', error.message);
 });
+
 
