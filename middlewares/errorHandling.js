@@ -8,4 +8,5 @@ function errorHandling(err, req, res, next) {
     ...details(details && { errors: details }),
   });
 }
-module.exports = errorHandling;
+
+module.exports = { errorHandling };
