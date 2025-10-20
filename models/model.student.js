@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 const StudentSchema = new mongoose.Schema({
   user: {
-    type: mongoose.Schema.types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "Student",
-    required: true,
+    // required: true,
   },
   dob: {
     type: Date,
@@ -15,8 +15,8 @@ const StudentSchema = new mongoose.Schema({
   },
   documents: {
     type: [String],
-    required: true,
+    // required: true,
   },
 });
-const Student = mongoose.model('Student', StudentSchema);
-module.exports = {Student};
+const Student = mongoose.model("Student", StudentSchema);
+module.exports = { Student };

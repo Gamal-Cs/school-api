@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
-const User = require("../models/model.user");
-const Teacher = require("../models/teacher");
-const Student = require("../models/model.student");
+const { User } = require("../models/model.user");
+const { Teacher } = require("../models/model.teacher");
+const { Student } = require("../models/model.student");
 const bcrypt = require("bcrypt");
 
 async function signupController(req, res) {

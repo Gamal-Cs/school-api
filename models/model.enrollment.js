@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const enrollmentSchema = new mongoose.Schema({
     student: {
@@ -12,6 +12,6 @@ const enrollmentSchema = new mongoose.Schema({
     enrollmentAt: Date
 });
 
-const Enrollment = mongoose.model('Enrollment', enrollmentSchema);
+const Enrollment = mongoose.model("Enrollment", enrollmentSchema);
 
-module.exports = {Enrollment};
+module.exports = { Enrollment };
