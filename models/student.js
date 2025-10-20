@@ -3,7 +3,7 @@ const StudentSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.types.ObjectId,
     ref: "Student",
-    required: true,
+    // required: true,
   },
   dob: {
     type: Date,
@@ -15,7 +15,7 @@ const StudentSchema = new mongoose.Schema({
   },
   documents: {
     type: [String],
-    required: true,
+    // required: true,
   },
 });
 const Student = mongoose.model(Student, StudentSchema);
