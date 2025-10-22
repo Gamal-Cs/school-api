@@ -5,6 +5,7 @@ const app = express();
 const { authRouter } = require("./routes/auth.routes");
 const { studentRouter } = require("./routes/student.routes");
 const { userRouter } = require("./routes/user.routes");
+const { teacherRouter } = require("./routes/teacher.routes");
 
 app.use(express.json());
 
@@ -15,6 +16,7 @@ app.get("/", (req, res) => {
 app.use("/api/auth", authRouter);
 app.use("/api/students", studentRouter);
 app.use("/api/users", userRouter);
+app.use("/api/teachers", teacherRouter);
 
 app.use(errorHandling);
 module.exports = { app };
