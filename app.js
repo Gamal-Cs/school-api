@@ -1,24 +1,48 @@
-const express = require("express");
-const { errorHandling } = require("./middlewares/errorHandling");
+// Import required modules
+import express from 'express';
+import path from 'path';
+import fs from 'fs';import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
+import cookieParser from 'cookie-parser';
+import morgan from 'morgan';
+
+import errorHandler from "./middlewares/errorMiddleware.js";
+import authRoutes from "./routes/authRoutes.js";
+import uploadRoutes from "./routes/uploadRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
+import studentRoutes from "./routes/studentRoutes.js";
+import teacherRoutes from "./routes/teacherRoutes.js";
+import courseRoutes from "./routes/courseRoutes.js";
+import enrollmentRoutes from "./routes/enrollmentRoutes.js";
 
 const app = express();
-const { authRouter } = require("./routes/auth.routes");
-const { studentRouter } = require("./routes/student.routes");
-const { userRouter } = require("./routes/user.routes");
-const { teacherRouter } = require("./routes/teacher.routes");
-const { courseRouter } = require("./routes/course.routes");
 
-app.use(express.json());
-
-app.get("/", (req, res) => {
-  res.send("Welcome to the School Management API");
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  standardHeaders: true,
+  legacyHeaders: false,
 });
 
-app.use("/api/auth", authRouter);
-app.use("/api/students", studentRouter);
-app.use("/api/users", userRouter);
-app.use("/api/teachers", teacherRouter);
-app.use("/api/courses", courseRouter);
+const accessHistory = fs.createWriteStream(path.resolve('logs', 'requests.log'), { flags: 'a' });
 
-app.use(errorHandling);
-module.exports = { app };
+app.use(limiter);
+app.use(helmet());
+app.use(cookieParser());
+app.use(morgan('combined', { stream: accessHistory }));
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use("/api/users", userRoutes);
+app.use("/api/students", studentRoutes);
+app.use("/api/teachers", teacherRoutes);
+app.use("/api/courses", courseRoutes);
+app.use("/api/enrollments", enrollmentRoutes);
+
+app.use("/api/auth", authRoutes);
+app.use("/api/upload", uploadRoutes);
+
+app.use(errorHandler);
+
+export default app;
